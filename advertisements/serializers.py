@@ -22,8 +22,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Advertisement
-        fields = ('id', 'title', 'description', 'creator',
-                  'status', 'created_at', )
+        fields = ('__all__')
 
     def create(self, validated_data):
         """Метод для создания"""
@@ -34,6 +33,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         # обратите внимание на `context` – он выставляется автоматически
         # через методы ViewSet.
         # само поле при этом объявляется как `read_only=True`
+
         validated_data["creator"] = self.context["request"].user
         return super().create(validated_data)
 

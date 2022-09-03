@@ -6,8 +6,7 @@ from advertisements.models import Advertisement
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'description', 'status', 'creator', 'created_at', 'updated_at']
+    list_display = ['id', 'title', 'description', 'status', 'creator', 'created_at', 'updated_at', 'draft']
     list_display_links = ['id', 'title']
-    list_filter = ['status', 'creator']
-    #search_fields = ['products__title']
+    list_filter = ['status', 'creator', 'draft']
     #inlines = [ProductInline,]    

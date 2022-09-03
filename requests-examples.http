@@ -7,23 +7,40 @@ GET {{baseUrl}}/advertisements/
 Content-Type: application/json
 
 ###
+GET {{baseUrl}}/advertisements/
+Content-Type: application/json
+# lisa
+Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+
+###
 
 # создание объявления
 POST {{baseUrl}}/advertisements/
 Content-Type: application/json
-Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+# Unknown
+#Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+# mikhail
+# Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
+# admin
+Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+# lisa
+#Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
 
 {
-  "title": "Шкаф IKEA",
-  "description": "Срочно"
+  "title": "ВНИМАНИЕ! НОВЫЕ ПРАВИЛА СЕРВИСА!",
+  "description": "Опубликованы Правила использования сервиса v.2.2",
+  "draft": "false"
 }
 
 ###
 
 # попытка поменять объявление
-PATCH {{baseUrl}}/advertisements/1/
+PATCH {{baseUrl}}/advertisements/12/
 Content-Type: application/json
-Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+# Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+# Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
+# Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
 
 {
   "status": "CLOSED"
@@ -38,5 +55,20 @@ Content-Type: application/json
 ###
 
 # фильтрация по дате
-GET {{baseUrl}}/advertisements/?created_at_before=2020-10-01
+GET {{baseUrl}}/advertisements/?created_at_before=2022-09-03
 Content-Type: application/json
+
+###
+
+# фильтрация по дате
+GET {{baseUrl}}/advertisements/?created_at_after=2022-09-02
+Content-Type: application/json
+
+###
+
+# удаление записи
+DELETE {{baseUrl}}/advertisements/17/
+Content-Type: application/json
+#Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+#Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
+Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7

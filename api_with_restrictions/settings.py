@@ -152,3 +152,5 @@ REST_FRAMEWORK = {
     ],
 }
 
+# максимальное кол-во открытых объявления
+MAXIMUM_ADVERTISEMENTS = 10
