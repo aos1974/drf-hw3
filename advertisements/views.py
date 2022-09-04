@@ -51,8 +51,11 @@ class AdvertisementViewSet(ModelViewSet):
         if self.request.user.id is None:
             queryset = Advertisement.objects.filter(draft=False).all()
         else:
-            qr = Q(id=self.request.user.id, draft=True)
-            queryset = queryset.exclude(qr)
+            # для авторизованного пользователя показываем все его объявления
+            # и "чистовики" других пользователей
+            queryset1 = Advertisement.objects.filter(draft=False).all()
+            queryset2 = Advertisement.objects.filter(creator_id=self.request.user.id, draft=True).all()
+            queryset = queryset1.union(queryset2, all=True)
         return queryset
  
     def count_status(self, user) -> int:
