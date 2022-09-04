@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from advertisements.models import Advertisement
+from advertisements.models import Advertisement, FavoriteAdvertisement
 
 # Register your models here.
 
@@ -10,3 +10,7 @@ class AdvertisementAdmin(admin.ModelAdmin):
     list_display_links = ['id', 'title']
     list_filter = ['status', 'creator', 'draft']
     #inlines = [ProductInline,]    
+
+@admin.register(FavoriteAdvertisement)
+class FavoriteAdvertisementAdmin(admin.ModelAdmin):
+    list_display = ['user','adv_id',]

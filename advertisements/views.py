@@ -4,12 +4,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
 
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, DateFromToRangeFilter
 
-from advertisements.models import Advertisement
+from advertisements.models import Advertisement, FavoriteAdvertisement
 from advertisements.permissions import IsOwner
-from advertisements.serializers import AdvertisementSerializer
+from advertisements.serializers import AdvertisementSerializer, FavoriteAdvertisementSerializer
 from api_with_restrictions.settings import MAXIMUM_ADVERTISEMENTS
 
 class AdvDateFilter(FilterSet):
@@ -93,3 +94,30 @@ class AdvertisementViewSet(ModelViewSet):
                     return Response({'status' : 'Превышено количество открытых объявлений'}, 
                             status=status.HTTP_409_CONFLICT, exception=True)        
         return super().update(request, *args, **kwargs)
+    
+    # избранные обьявления
+    @action(methods=['GET'], detail=False)
+    def favorites(self, request):
+        queryset = FavoriteAdvertisement.objects.filter(user=request.user.id).all()
+        serializer = FavoriteAdvertisementSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    @action(methods=['POST', 'DELETE'], detail=True)
+    def favorite(self, request, pk=None):
+        if pk is None or request.user.id == None:
+            return Response({'status' : f'Nothing to do!'}, 
+                            status=status.HTTP_204_NO_CONTENT)
+        if request.method == 'POST':
+            adv = Advertisement.objects.get(id=pk)
+            obj, created = FavoriteAdvertisement.objects.update_or_create(
+                    user=request.user, adv_id=adv)
+            return Response({'status' : f'Обьяление id=<{pk}> добавлено в избранное'}, 
+                            status=status.HTTP_201_CREATED)
+        if request.method == 'DELETE':
+            count = FavoriteAdvertisement.objects.filter(
+                    user=request.user.id,
+                    adv_id=pk).delete()
+            return Response({'status' : f'Обьяление id=<{pk}> удалено из избранного'}, 
+                            status=status.HTTP_204_NO_CONTENT)
+        return Response({'code': 'Ok'})
+    

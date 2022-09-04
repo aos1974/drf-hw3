@@ -72,3 +72,38 @@ Content-Type: application/json
 #Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
 #Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
 Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+
+###
+GET {{baseUrl}}/advertisements/favorites/
+Content-Type: application/json
+# lisa
+Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+
+###
+
+# поместить объявление в избранное
+POST {{baseUrl}}/advertisements/15/favorite/
+Content-Type: application/json
+# Unknown
+#Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+# mikhail
+# Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
+# admin
+#Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+# lisa
+Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+
+###
+
+# удалить объявление из избранного
+DELETE {{baseUrl}}/advertisements/15/favorite/
+Content-Type: application/json
+# Unknown
+#Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
+# mikhail
+# Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
+# admin
+#Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+# lisa
+Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+

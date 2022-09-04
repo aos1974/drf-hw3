@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from advertisements.models import Advertisement
+from advertisements.models import Advertisement, FavoriteAdvertisement
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -43,3 +43,14 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         # TODO: добавьте требуемую валидацию
 
         return data
+
+
+class FavoriteAdvertisementSerializer(serializers.ModelSerializer):
+    """Serializer для избранных объявлений."""
+
+    class Meta:
+        model = FavoriteAdvertisement
+        #fields = ('id', 'user', 'adv_id',)
+        fields = ('adv_id',)
+        depth = 1
+
