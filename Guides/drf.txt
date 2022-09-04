@@ -1,0 +1,48 @@
+DRF Throttling
+https://django.fun/docs/django-rest-framework/ru/3.12/api-guide/throttling/
+
+DRF Permissions
+https://django.fun/docs/django-rest-framework/ru/3.12/api-guide/permissions/
+
+DRF ModelView + @action
+https://django.fun/docs/django-rest-framework/ru/3.12/api-guide/viewsets/#modelviewset
+https://django-rest-framework.ru/api-guide/viewsets/
+https://proproprogs.ru/django/drf-simplerouter-i-defaultrouter
+
+DRF Serializer
+https://django.fun/docs/django-rest-framework/ru/3.12/api-guide/serializers/
+DRF validate data
+https://dvmn.org/encyclopedia/django_rest_framework/validate-data-with-drf/
+
+DRF Filtering
+https://django.fun/docs/django-rest-framework/ru/3.12/api-guide/filtering/#top
+https://django-rest-framework.ru/api-guide/filtering/
+https://stackoverflow.com/questions/42582859/filtering-using-viewsets-in-django-rest-framework
+https://russianblogs.com/article/9523795110/
+https://stackoverflow.com/questions/41194200/django-filter-with-drf-how-to-do-and-when-applying-multiple-values-with-the
+
+https://programbox.ru/2022/01/15/drf-отфильтруйте-несколько-полей-в-одно/
+
+DRF Динамическая фильтрация, включая даты
+https://question-it.com/questions/11891781/dinamicheskaja-filtratsija-drf
+
+DRF DateTimeFromToRangeFilter
+https://django-filter.readthedocs.io/en/stable/ref/filters.html#datefromtorangefilter
+
+
+DRF Queries QuerySet
+https://django.fun/docs/django/ru/4.0/topics/db/queries/
+
+Queryset & SQL (SELECT...)
+https://docs.djangoproject.com/en/4.0/ref/models/querysets/#django.db.models.query.QuerySet.exclude
+
+DRF Exclude from queryset
+https://stackoverflow.com/questions/49999875/drf-exclude-from-queryset
+
+https://django.fun/docs/django/ru/4.0/ref/models/expressions/
+
+Django EXCEPTIONS
+https://stackoverflow.com/questions/63128730/custom-exceptions-with-django-rest-framework
+
+DJango & VSCode
+https://russianblogs.com/article/3798229812/
