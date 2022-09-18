@@ -7,19 +7,12 @@ from rest_framework import status
 from rest_framework.decorators import action
 
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, DateFromToRangeFilter
+from advertisements.filters import AdvertisementFilter
 
 from advertisements.models import Advertisement, FavoriteAdvertisement
 from advertisements.permissions import IsOwner
 from advertisements.serializers import AdvertisementSerializer, FavoriteAdvertisementSerializer
 from api_with_restrictions.settings import MAXIMUM_ADVERTISEMENTS
-
-class AdvDateFilter(FilterSet):
-    """Фильтр по датам для объявлений"""
-    created_at = DateFromToRangeFilter()
-
-    class Meta:
-        model = Advertisement
-        fields = ['creator', 'created_at', 'draft']
 
 
 class AdvertisementViewSet(ModelViewSet):
@@ -32,7 +25,7 @@ class AdvertisementViewSet(ModelViewSet):
     serializer_class = AdvertisementSerializer
     permission_classes = [IsAuthenticated, IsOwner]
     filter_backends = [DjangoFilterBackend,]
-    filterset_class = AdvDateFilter
+    filterset_class = AdvertisementFilter
     throttle_classes = [AnonRateThrottle]
 
     def get_permissions(self):
@@ -45,6 +38,9 @@ class AdvertisementViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        # удалять можно записи с любыми статусами
+        if self.action in ['destroy', 'partial_update', 'update']:
+            return queryset
         # если это администратор то для него нет ограничений
         if self.request.user.is_superuser:
             return queryset
@@ -67,32 +63,24 @@ class AdvertisementViewSet(ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
-        # если это не администратор сервиса
-        if not request.user.is_superuser:
-            # выполняем проверку на кол-во обьявлений
-            if self.count_status(request.user) >= MAXIMUM_ADVERTISEMENTS:
-                return Response({'status' : 'Превышено количество открытых объявлений'}, 
-                                status=status.HTTP_409_CONFLICT, exception=True)
+        # только авторизованным пользователям разрешено создавать записи
+        if not request.user.is_authenticated:
+            return Response({'status' : 'Пользователь не авторизован!'}, 
+                                status=status.HTTP_401_UNAUTHORIZED, exception=True)
         return super().create(request, *args, **kwargs)
     
     def partial_update(self, request, *args, **kwargs):
-        # если это не администратор сервиса
-        if not request.user.is_superuser:
-            # выполняем проверку на кол-во обьявлений        
-            if self.count_status(request.user) >= MAXIMUM_ADVERTISEMENTS:
-                if request.data.get('status') == 'OPEN' or request.data.get('draft') == False:
-                    return Response({'status' : 'Превышено количество открытых объявлений'}, 
-                            status=status.HTTP_409_CONFLICT, exception=True)        
+        # только авторизованным пользователям разрешено вносить изменения
+        if not request.user.is_authenticated:
+            return Response({'status' : 'Пользователь не авторизован!'}, 
+                                status=status.HTTP_401_UNAUTHORIZED, exception=True)       
         return super().partial_update(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        # если это не администратор сервиса
-        if not request.user.is_superuser:
-            # выполняем проверку на кол-во обьявлений
-            if self.count_status(request.user) >= MAXIMUM_ADVERTISEMENTS:
-                if request.data.get('status') == 'OPEN' or request.data.get('draft') == False:
-                    return Response({'status' : 'Превышено количество открытых объявлений'}, 
-                            status=status.HTTP_409_CONFLICT, exception=True)        
+        # изменения разрешены только авторизованным пользователям
+        if not request.user.is_authenticated:
+            return Response({'status' : 'Пользователь не авторизован!'}, 
+                                status=status.HTTP_401_UNAUTHORIZED, exception=True)        
         return super().update(request, *args, **kwargs)
     
     # избранные обьявления

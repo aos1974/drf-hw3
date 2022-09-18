@@ -10,8 +10,8 @@ Content-Type: application/json
 GET {{baseUrl}}/advertisements/
 Content-Type: application/json
 # lisa
-Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
-
+#Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+Authorization: Token 790f4b413dfb28955a127c0a691fc69b0b477403
 ###
 
 # создание объявления
@@ -22,34 +22,44 @@ Content-Type: application/json
 # mikhail
 # Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
 # admin
-Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+#Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+#Authorization: Token b4082dfb29a895407531a70bdc0c82488811d9cf
 # lisa
 #Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+Authorization: Token 790f4b413dfb28955a127c0a691fc69b0b477403
+
+# {
+#   "title": "ВНИМАНИЕ! НОВЫЕ ПРАВИЛА СЕРВИСА!",
+#   "description": "Опубликованы Правила использования сервиса v.2.2",
+#   "draft": "false"
+# }
 
 {
-  "title": "ВНИМАНИЕ! НОВЫЕ ПРАВИЛА СЕРВИСА!",
-  "description": "Опубликованы Правила использования сервиса v.2.2",
+  "title": "Mitsubishi Lancer X, 2022 г.",
+  "description": "Б/У, состояние нового авто",
   "draft": "false"
 }
+
 
 ###
 
 # попытка поменять объявление
-PATCH {{baseUrl}}/advertisements/12/
+PATCH {{baseUrl}}/advertisements/14/
 Content-Type: application/json
 # Authorization: Token 902ef055a9ac93f18327f1f9c45ab059f1a62c7d
-Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
+# Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
 # Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
 # Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+Authorization: Token 790f4b413dfb28955a127c0a691fc69b0b477403
 
 {
-  "status": "CLOSED"
+  "status": "OPEN"
 }
 
 ###
 
 # фильтрация по создателю
-GET {{baseUrl}}/advertisements/?creator=3
+GET {{baseUrl}}/advertisements/?creator=2
 Content-Type: application/json
 
 ###
@@ -66,12 +76,19 @@ Content-Type: application/json
 
 ###
 
+# фильтрация по статусу
+GET {{baseUrl}}/advertisements/?status=OPEN
+Content-Type: application/json
+
+###
+
 # удаление записи
-DELETE {{baseUrl}}/advertisements/17/
+DELETE {{baseUrl}}/advertisements/11/
 Content-Type: application/json
 #Authorization: Token fdb794c141ce5d3f681a93a03ba9dd073fe0d91a
 #Authorization: Token 7ea965153cbbbc1166303aaa4c6981fbad0868ae
-Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+#Authorization: Token f4188bbe8366d1f16949ca91529513b3178843b7
+Authorization: Token 790f4b413dfb28955a127c0a691fc69b0b477403
 
 ###
 GET {{baseUrl}}/advertisements/favorites/

@@ -89,7 +89,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netology_classified_ads',
-        'HOST': '192.168.43.196',
+        #'HOST': '192.168.43.196',
+        'HOST': '172.18.134.205',
         'PORT': '5432',
         'USER': 'ormadmin',
         'PASSWORD': 'oRm2022!!!'   
