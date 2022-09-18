@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from advertisements.models import Advertisement, FavoriteAdvertisement
+from api_with_restrictions.settings import MAXIMUM_ADVERTISEMENTS
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -40,8 +41,14 @@ class AdvertisementSerializer(serializers.ModelSerializer):
     def validate(self, data):
         """Метод для валидации. Вызывается при создании и обновлении."""
 
-        # TODO: добавьте требуемую валидацию
-
+        req = self.context.get('request')
+        # если это не администратор сервиса
+        if not req.user.is_superuser:
+            # выполняем проверку на кол-во открытых обьявлений
+            queryset = Advertisement.objects.filter(creator_id=req.user.id, draft=False).all()
+            cnt = queryset.filter(status='OPEN').count()
+            if cnt >= MAXIMUM_ADVERTISEMENTS and data.get('status') is not 'CLOSED':
+                raise serializers.ValidationError('Превышено количество открытых объявлений')
         return data
 
 
